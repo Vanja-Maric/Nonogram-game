@@ -92,8 +92,8 @@ public class StartPage {
     JPanel gameSizeButtonsContainer = getContainerForGameSizeButtons();
 
     JRadioButton option1 = getRadioButtonForGameSize("15 x 15 (easy)", "15");
-    JRadioButton option2 = getRadioButtonForGameSize("30 x 30 (medium)", "30");
-    JRadioButton option3 = getRadioButtonForGameSize("50 x 50 (hard)", "50");
+    JRadioButton option2 = getRadioButtonForGameSize("25 x 25 (medium)", "25");
+    JRadioButton option3 = getRadioButtonForGameSize("40 x 40 (hard)", "40");
 
     option1.setSelected(true);
 
@@ -117,8 +117,8 @@ public class StartPage {
   }
 
   private JRadioButton getRadioButtonForGameSize(String text, String actionCommand) {
-    JRadioButton option = new JRadioButton("15 x 15 (easy)");
-    option.setActionCommand("15");
+    JRadioButton option = new JRadioButton(text);
+    option.setActionCommand(actionCommand);
     return option;
   }
 
@@ -128,7 +128,6 @@ public class StartPage {
     startGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // Pozovite metodu listener-a
         if (startGameListener != null) {
           int gameSize = getGameSize();
           startGameListener.startGameButtonClicked(gameSize);

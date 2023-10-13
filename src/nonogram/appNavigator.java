@@ -1,33 +1,43 @@
 import javax.swing.*;
+import nonogram.NonogramGridCreator;
 
 public class appNavigator implements StartGameListener {
-  private JFrame gameFrame;
+  private JFrame appFrame;
 
   public appNavigator() {
-    gameFrame = new JFrame("Nonogram");
+    appFrame = new JFrame("Nonogram");
     setGameFrameCharacteristics();
     showStartGamePage();
   }
 
   private void setGameFrameCharacteristics() {
-    gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    gameFrame.setSize(800, 600);
-    gameFrame.setVisible(true);
-    gameFrame.setLocationRelativeTo(null); // Set JFrame to the middle of the screen
+    appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    appFrame.setSize(800, 600);
+    appFrame.setVisible(true);
+    appFrame.setLocationRelativeTo(null); // Set JFrame to the middle of the screen
   }
 
   private void showStartGamePage() {
     StartPage startPageClass = new StartPage();
     startPageClass.setStartGameListener(this);
     JPanel startPage = startPageClass.getStartPage();
-    gameFrame.add(startPage);
+    appFrame.add(startPage);
   }
 
   @Override
   public void startGameButtonClicked(int numberOfRowsAndCollumns) {
-    gameFrame.getContentPane().removeAll();
-    System.out.println(numberOfRowsAndCollumns);
-    gameFrame.revalidate(); // Refresh layout
-    gameFrame.repaint();
+    appFrame.getContentPane().removeAll();
+    showGame(numberOfRowsAndCollumns);
+    appFrame.revalidate(); // Refresh layout
+    appFrame.repaint();
   }
+
+  private void showGame(int numberOfRowsAndCollumns ) {
+    NonogramGridCreator nGridCreator = new NonogramGridCreator("src/images/flower.png", numberOfRowsAndCollumns, numberOfRowsAndCollumns); // TODO: JUST HARD CODED IMAGES NOW
+
+    Game nonogrmGame = new Game(nGridCreator.getBlackAndWhiteGrid());
+    // TODO: ADD METHOD THAT I AM GOING TO CREATE NEXT IN GAME
+    appFrame.add(nonogrmGame.getGame());
+  }
+
 }
