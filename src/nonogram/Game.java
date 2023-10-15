@@ -26,9 +26,7 @@ public class Game {
   }
 
   private Box createNonogramCellsGrid() { // TODO: NAME
-    BlackWhiteNonogramCellCounts bWhiteNonogramCellCounts = new BlackWhiteNonogramCellCounts(nonogramGrid); // TODO: DO
-    // NOT ADD
-                                                                                                            // THIS HERE
+    BlackWhiteNonogramCellCounts bWhiteNonogramCellCounts = new BlackWhiteNonogramCellCounts(nonogramGrid); // TODO: DO not add this here
     ArrayList<ArrayList<Integer>> rowCo = bWhiteNonogramCellCounts.getBlackCellCountsInAllRows(); // TODO: REMOVE
     Box verticalBoxforButtonRows = Box.createVerticalBox();
     for (int row = 0; row < nonogramGrid.length; row++) {
@@ -39,7 +37,7 @@ public class Game {
     return verticalBoxforButtonRows;
   }
 
-  private Box getOneNonogramRow(String[] oneRowOfNonogramGrid) {
+  private Box getOneNonogramRow(String[] oneRowOfNonogramGrid) { // DONEEEEEEEEEEEEEEEEEEE
     Box buttonRowBox = Box.createHorizontalBox();
     for (int cell = 0; cell < oneRowOfNonogramGrid.length; cell++) {
       JButton nonogramCell = createCell();
@@ -54,7 +52,7 @@ public class Game {
     return buttonRowBox;
   }
 
-  private JButton createCell() {
+  private JButton createCell() { // DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     JButton button = new JButton();
     // Color cellColor = setCellColor(gridCellColor);
     button.setBackground(Color.WHITE);
@@ -71,7 +69,7 @@ public class Game {
     return button;
   }
 
-  private void changeCellValue(JButton targetCell) {
+  private void changeCellValue(JButton targetCell) { // DONEEEEEEEEEEEEEEEEEEEEEEEEE
     Color currentCellColor = targetCell.getBackground();
 
     if (currentCellColor == Color.WHITE) {
