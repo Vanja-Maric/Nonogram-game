@@ -33,7 +33,7 @@ public class appNavigator implements StartGameListener {
   }
 
   private void showGame(int numberOfRowsAndCollumns ) {
-    NonogramGridCreator nGridCreator = new NonogramGridCreator("src/images/flower.png", numberOfRowsAndCollumns, numberOfRowsAndCollumns); // TODO: JUST HARD CODED IMAGES NOW
+    NonogramGridCreator nGridCreator = new NonogramGridCreator("src/images/human.png", numberOfRowsAndCollumns, numberOfRowsAndCollumns); // TODO: JUST HARD CODED IMAGES NOW
 
     Game nonogrmGame = new Game(nGridCreator.getBlackAndWhiteGrid());
     // TODO: ADD METHOD THAT I AM GOING TO CREATE NEXT IN GAME
@@ -41,3 +41,12 @@ public class appNavigator implements StartGameListener {
   }
 
 }
+
+// TODO: KRAVSPECIFICATION
+// TODO: REFLEKTERA OCVER KAPITEL 2 - 11 OCH HUR DEN HAR POVERKAT MIN KOD
+// TODO: DOKUMENTATION
+// TODO: TESTS
+// TODO: DELA UPP KLASSER I OLIKA KATALOGER ELLER MVC
+// TODO: DELA UPP I MINDRE KLASSER
+// TODO: DEPLOYA??
+// TODO: SEPAREra DELAR AV KLASS SOM INTE HOR IHOP. LADDA BILDEN I MODULEN???

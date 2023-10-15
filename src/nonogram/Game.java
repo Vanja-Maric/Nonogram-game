@@ -27,7 +27,7 @@ public class Game {
 
   private Box createNonogramCellsGrid() { // TODO: NAME
     BlackWhiteNonogramCellCounts bWhiteNonogramCellCounts = new BlackWhiteNonogramCellCounts(nonogramGrid); // TODO: DO
-                                                                                                            // NOT ADD
+    // NOT ADD
                                                                                                             // THIS HERE
     ArrayList<ArrayList<Integer>> rowCo = bWhiteNonogramCellCounts.getBlackCellCountsInAllRows(); // TODO: REMOVE
     Box verticalBoxforButtonRows = Box.createVerticalBox();
@@ -95,7 +95,7 @@ public class Game {
       Box verticalBox = Box.createVerticalBox();
       for (int j = 0; j < highestSizeOfCountsInAllRows; j++) {
         JButton emptyButton = createCell();
-      emptyButton.setBackground(Color.YELLOW);
+        emptyButton.setBackground(Color.YELLOW);
         verticalBox.add(emptyButton);
       }
       allCollumnCounts.add(verticalBox);
