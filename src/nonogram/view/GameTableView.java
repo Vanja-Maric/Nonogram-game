@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 
 
-public class GameView {
+public class GameTableView {
     public Box createNonogramCellsGrid(String[][] nonogramGrid) { // TODO: NAME
     // BlackWhiteNonogramCellCounts bWhiteNonogramCellCounts = new BlackWhiteNonogramCellCounts(nonogramGrid); // TODO: DO not add this here
     // ArrayList<ArrayList<Integer>> rowCo = bWhiteNonogramCellCounts.getBlackCellCountsInAllRows(); 
