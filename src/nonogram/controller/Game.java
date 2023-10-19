@@ -3,12 +3,11 @@ package controller;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import model.ImageLoader;
+import model.NonogramGrid;
 import view.AppFrame;
-import view.GameTableView;
+import view.GamePage;
 import view.StartPageView;
 
-import nonogram.NonogramGridCreator;
 
 public class Game implements StartGameListener {
   private AppFrame appFrame = new AppFrame();
@@ -24,24 +23,20 @@ public class Game implements StartGameListener {
     appFrame.showAppFrame(nonogramGameappFrame);
   }
 
-  private void showGame(int gameSize) {
-    GameTableView gameView = new GameTableView();
-    JPanel testJPanel = new JPanel();
-    testJPanel.add(gameView.createNonogramCellsGrid(getNonogramGrid())); // TODO: REMOVE THIS AFTER TEST
-    appFrame.addContentToAppFrame(testJPanel);
+  private void showGamePage(int gameSize) {
+    GamePage gamePage = new GamePage(getNonogramGrid());
+    appFrame.addContentToAppFrame(gamePage.getGamePage());
   }
 
   private String[][] getNonogramGrid() {
-    ImageLoader  imageLoader = new ImageLoader();
-    String[] imagesPath = imageLoader.loadImagePaths("src/images", ".png");
-    NonogramGridCreator nonogramGridCreator = new NonogramGridCreator(imagesPath[level - 1], 15, 15); // TODO: DO NOT HARDCODE THIS
-    return nonogramGridCreator.getBlackAndWhiteGrid();
+    NonogramGrid nonogram = new NonogramGrid();
+    return nonogram.getNonogramGrid(level, 15, 15);
   }
 
   @Override
   public void startGameButtonClicked() {
     appFrame.removeAllContent();
-    showGame(15);
+    showGamePage(15);
     appFrame.refreshContent();
   }
 

@@ -5,7 +5,7 @@ import java.awt.Color;
 
 public class GameTableController {
 
-   protected void changeCellValue(JButton targetCell) { 
+   public void changeCellValue(JButton targetCell) { 
     Color currentCellColor = targetCell.getBackground();
 
     if (currentCellColor == Color.WHITE) {

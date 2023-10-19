@@ -5,6 +5,8 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import controller.GameTableController;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +14,13 @@ import java.awt.Color;
 
 
 public class GameTableView {
-    public Box createNonogramCellsGrid(String[][] nonogramGrid) { // TODO: NAME
+  private GameTableController gameTableController = new GameTableController();
+
+  public Box getGameTable(String[][] nonogramGrid) {
+    return createGameTable(nonogramGrid);
+  }
+
+    private Box createGameTable(String[][] nonogramGrid) { // TODO: NAME
     // BlackWhiteNonogramCellCounts bWhiteNonogramCellCounts = new BlackWhiteNonogramCellCounts(nonogramGrid); // TODO: DO not add this here
     // ArrayList<ArrayList<Integer>> rowCo = bWhiteNonogramCellCounts.getBlackCellCountsInAllRows(); 
     // TODO: REMOVE THIS ABOVE
@@ -37,7 +45,7 @@ public class GameTableView {
       nonogramCell.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          // changeCellValue(nonogramCell);
+          gameTableController.changeCellValue(nonogramCell);
         }
       });
       
@@ -57,6 +65,8 @@ public class GameTableView {
   }
 
   private void setCellButtonColor(JButton gameCell, Color colorOfCell) {
+    gameCell.setOpaque(true);
+    gameCell.setFocusPainted(false);
     gameCell.setBackground(colorOfCell);
   }
 
