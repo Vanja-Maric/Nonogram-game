@@ -4,21 +4,34 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import controller.GameTableController;
+import controller.GameBoardController;
 import model.NonogramCounts;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.Color;
 
 public class GameBoardView {
   private NonogramCounts nonogramCounts;
+  private ArrayList<ArrayList<JButton>> gameCells = new ArrayList<ArrayList<JButton>>();
 
-  public Box getGameTable(String[][] nonogramGrid) {
+  public Box getGameBoard(String[][] nonogramGrid) {
     nonogramCounts = new NonogramCounts(nonogramGrid);
     return createGameBoard(nonogramGrid);
   }
+
+  // TODO: KORISTI OVO DA PROVJERIS DA LI JE VEC POSTAVLJENA BOJA NA CRNU ILI
+  // SIVU A AKO NIJE ONDA UPOREDI SA GRIDOM I POSTAVI NA CRNU ILI SIVU
+  public Color getCellColor(int row, int column) {
+    return gameCells.get(row).get(column).getBackground();
+  }
+
+  // TODO: KORISTI OVO DA POSTAVIS BOJU NA CRNU ILI SIVU ZA OVO IZNAD
+  public void setColor(Color color, int row, int column) {
+    gameCells.get(row).get(column).setBackground(color);
+  } 
 
   private Box createGameBoard(String[][] nonogramGrid) { // TODO: NAME
     Box gameBoard = Box.createVerticalBox();
@@ -36,11 +49,15 @@ public class GameBoardView {
 
   private Box getOneNonogramRow(String[] oneRowOfNonogramGrid) {
     Box buttonRowBox = Box.createHorizontalBox();
+    ArrayList<JButton> gameCellsInOneRow = new ArrayList<JButton>();
 
     for (int cell = 0; cell < oneRowOfNonogramGrid.length; cell++) {
       JButton nonogramCell = createCell();
+      gameCellsInOneRow.add(nonogramCell);
       buttonRowBox.add(nonogramCell);
     }
+    
+    gameCells.add(gameCellsInOneRow);
     return buttonRowBox;
   }
 
@@ -76,7 +93,7 @@ public class GameBoardView {
     gameCell.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        GameTableController gameTableController = new GameTableController();
+        GameBoardController gameTableController = new GameBoardController();
         gameTableController.changeCellColorAndText(gameCell);
       }
     });

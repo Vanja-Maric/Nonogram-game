@@ -1,7 +1,6 @@
 package controller;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import model.NonogramGrid;
 import view.AppFrame;
@@ -49,4 +48,6 @@ public class Game implements StartGameListener, BackToMainMenuListener {
     showStartPage();
     appFrame.refreshContent();
   }
+
+
 }

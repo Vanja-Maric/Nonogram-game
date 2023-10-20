@@ -1,9 +1,12 @@
 package controller;
 
 import javax.swing.JButton;
+
+import model.Hint;
+
 import java.awt.Color;
 
-public class GameTableController {
+public class GameBoardController {
 
    public void changeCellColorAndText(JButton targetCell) { 
     Color currentCellColor = targetCell.getBackground();
@@ -18,6 +21,6 @@ public class GameTableController {
       targetCell.setBackground(Color.WHITE);
       targetCell.setText("");
     }
-  }
+  }  
 
 }

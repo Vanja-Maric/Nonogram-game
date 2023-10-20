@@ -15,6 +15,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import controller.BackToMainMenuListener;
+import model.Hint;
 
 public class GamePageView {
   private String[][] nongramGrid;
@@ -22,6 +23,7 @@ public class GamePageView {
 
   public GamePageView(String[][] nonogramGrid) {
     this.nongramGrid = nonogramGrid;
+    System.out.println();
   }
 
   public void setBackToMainMenuListener(BackToMainMenuListener listener) {
@@ -49,7 +51,7 @@ public class GamePageView {
     GridBagConstraints gridBagConstrains = new GridBagConstraints();
 
     setGbc(gridBagConstrains, 0, 0);
-    gamePageContainer.add(gameTable(), gridBagConstrains);
+    gamePageContainer.add(gameBoard(), gridBagConstrains);
 
     JPanel buttonsContainer = butonsContainer();
     setGbc(gridBagConstrains, 0, 1);
@@ -63,9 +65,9 @@ public class GamePageView {
     gbc.insets = new Insets(10, 10, 10, 10);
   }
 
-  private Box gameTable() {
-    GameBoardView gameTableView = new GameBoardView();
-    return gameTableView.getGameTable(nongramGrid);
+  private Box gameBoard() {
+    GameBoardView gameBoardView = new GameBoardView();
+    return gameBoardView.getGameBoard(nongramGrid);
   }
 
   private JPanel butonsContainer() {
@@ -113,10 +115,19 @@ public class GamePageView {
   private void addActionListenerToMakeGetHintButton(JButton getHintButton) {
     getHintButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        // getHintButtonActionPerformed(e);
+        // getHintButtonActionPerformed();
       }
     });
   }
+
+ /*  private void getHintButtonActionPerformed() {
+    // Generate random x and y coordinates in the range of the grid size
+    int x = (int) (Math.random() * nongramGrid.length);
+    int y = (int) (Math.random() * nongramGrid.length);
+    
+    Hint hint = new Hint(nongramGrid);
+    String hintColor = hint.getHint(x, y);
+  }*/
 
   private JButton makeMainMenuButton() {
     JButton mainMenuButton = gamePageButton("Main menu");

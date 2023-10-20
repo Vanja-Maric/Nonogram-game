@@ -7,8 +7,8 @@ public class Hint {
     this.nonogramGrid = nonogramGrid;
   }
 
-  public void getHint(int x, int y) {
+  public String getHint(int x, int y) {
     HintGetter hintGetter = new HintGetter(nonogramGrid);
-    hintGetter.getHint(x, y);
+    return hintGetter.getHint(x, y);
   }
 }
