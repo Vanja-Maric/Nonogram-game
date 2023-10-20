@@ -24,7 +24,7 @@ public class NonogramCounts {
     return countHighestSizeOfCountsInRowsOrColumns(getNonogramRowCounts());
   }
 
-  public int getHighestSizeOfCountsInolumns() {
+  public int getHighestSizeOfCountsInColumns() {
     return countHighestSizeOfCountsInRowsOrColumns(getNonogramColumnCounts());
   }
 

@@ -35,7 +35,7 @@ public class AppFrame {
 
   private void setGameFrameCharacteristics() {
     appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    appFrame.setSize(800, 600);
+    appFrame.setSize(1000, 800);
     appFrame.setLocationRelativeTo(null); // Set JFrame to the middle of the screen
   }
 }

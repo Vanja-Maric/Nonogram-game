@@ -5,39 +5,48 @@ import javax.swing.JPanel;
 
 import model.NonogramGrid;
 import view.AppFrame;
-import view.GamePage;
+import view.GamePageView;
 import view.StartPageView;
 
 
-public class Game implements StartGameListener {
+public class Game implements StartGameListener, BackToMainMenuListener {
   private AppFrame appFrame = new AppFrame();
   private int level = 1;
 
   protected void startGame() {
     JFrame nonogramGameappFrame = appFrame.getAppFrame();
-
-    StartPageView startPageView = new StartPageView();
-    startPageView.setStartGameListener(this);
-    
-    nonogramGameappFrame.add(startPageView.getStartPage());
+    showStartPage();
     appFrame.showAppFrame(nonogramGameappFrame);
   }
 
+  private void showStartPage() {
+    StartPageView startPageView = new StartPageView();
+    startPageView.setStartGameListener(this);
+    appFrame.addContentToAppFrame(startPageView.getStartPage());
+  }
+
   private void showGamePage(int gameSize) {
-    GamePage gamePage = new GamePage(getNonogramGrid());
+    GamePageView gamePage = new GamePageView(nonogramGrid(gameSize));
+    gamePage.setBackToMainMenuListener(this);
     appFrame.addContentToAppFrame(gamePage.getGamePage());
   }
 
-  private String[][] getNonogramGrid() {
+  private String[][] nonogramGrid(int gameSize) {
     NonogramGrid nonogram = new NonogramGrid();
-    return nonogram.getNonogramGrid(level, 15, 15);
+    return nonogram.getNonogramGrid(level, gameSize, gameSize);
   }
 
   @Override
-  public void startGameButtonClicked() {
+  public void startGameButtonClicked(int gameSize) {
     appFrame.removeAllContent();
-    showGamePage(15);
+    showGamePage(gameSize);
     appFrame.refreshContent();
   }
 
+  @Override
+  public void mainMenuButtonClicked() {
+    appFrame.removeAllContent();
+    showStartPage();
+    appFrame.refreshContent();
+  }
 }

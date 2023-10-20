@@ -21,7 +21,7 @@ public class StartPageView {
     this.startGameListener = listener;
   }
 
-  public ButtonGroup getGameSizeButtonGroup() { // TODO: DODALA OVO PA PROVJERI DA LI RADI
+  public ButtonGroup getGameSizeButtonGroup() {
     return gameSizeButtonsGroup;
   }
 
@@ -40,8 +40,6 @@ public class StartPageView {
 
   private void setStartPageContainerLayout(JPanel startPageContainer) {
     startPageContainer.setLayout(new GridBagLayout());
-    startPageContainer.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    startPageContainer.setAlignmentY(JComponent.CENTER_ALIGNMENT);
   }
 
   // IT is impossible to respect all Clean code principle. YOu have to think which
@@ -54,17 +52,18 @@ public class StartPageView {
 
     setGbc(gridBagConstrains, 0, 0);
     setBiggerTopAndBottomInsets(gridBagConstrains);
-    startPageContainer.add(getNonogramText(), gridBagConstrains);
+    startPageContainer.add(nonogramText(), gridBagConstrains);
 
     setGbc(gridBagConstrains, 0, 1);
-    startPageContainer.add(getChooseGameSizeText(), gridBagConstrains);
+    startPageContainer.add(chooseGameSizeText(), gridBagConstrains);
 
     setGbc(gridBagConstrains, 0, 2);
-    startPageContainer.add(getGameSizeButtons(), gridBagConstrains);
+    startPageContainer.add(gameSizeButtons(), gridBagConstrains);
 
     setGbc(gridBagConstrains, 0, 3);
     setBiggerTopAndBottomInsets(gridBagConstrains);
-    startPageContainer.add(getStartGameButton(), gridBagConstrains);
+    startPageContainer.add(startGameButton(), gridBagConstrains);
+    
   }
 
   // Sets components position
@@ -79,7 +78,7 @@ public class StartPageView {
     gbc.insets = new Insets(30, 10, 30, 10);
   }
 
-  private JLabel getNonogramText() {
+  private JLabel nonogramText() {
     JLabel nonogramText = new JLabel("NONOGRAM GAME");
     Font nonogramTextFont = new Font("Arial", Font.BOLD | Font.ITALIC, 28);
 
@@ -88,18 +87,18 @@ public class StartPageView {
     return nonogramText;
   }
 
-  private JLabel getChooseGameSizeText() {
+  private JLabel chooseGameSizeText() {
     JLabel chooseGameSizeText = new JLabel("Choose size of the game: ");
     return chooseGameSizeText;
   }
 
-  private JPanel getGameSizeButtons() {
+  private JPanel gameSizeButtons() {
     gameSizeButtonsGroup = new ButtonGroup();
-    JPanel gameSizeButtonsContainer = getContainerForGameSizeButtons();
+    JPanel gameSizeButtonsContainer = containerForGameSizeButtons();
 
-    JRadioButton option1 = getRadioButtonForGameSize("15 x 15 (easy)", "15");
-    JRadioButton option2 = getRadioButtonForGameSize("25 x 25 (medium)", "25");
-    JRadioButton option3 = getRadioButtonForGameSize("40 x 40 (hard)", "40");
+    JRadioButton option1 = radioButtonForGameSize("12 x 12 (easy)", "12");
+    JRadioButton option2 = radioButtonForGameSize("20 x 20 (medium)", "20");
+    JRadioButton option3 = radioButtonForGameSize("30 x 30 (hard)", "30");
 
     option1.setSelected(true);
 
@@ -114,7 +113,7 @@ public class StartPageView {
     return gameSizeButtonsContainer;
   }
 
-  private JPanel getContainerForGameSizeButtons() {
+  private JPanel containerForGameSizeButtons() {
     JPanel gameSizeButtonsContainer = new JPanel();
 
     gameSizeButtonsContainer.setLayout(new FlowLayout());
@@ -129,13 +128,13 @@ public class StartPageView {
     gameSizeButtonsContainer.setMaximumSize(maxDimensionOfGameSizeButtonsContainer);
   }
 
-  private JRadioButton getRadioButtonForGameSize(String text, String actionCommand) {
+  private JRadioButton radioButtonForGameSize(String text, String actionCommand) {
     JRadioButton option = new JRadioButton(text);
     option.setActionCommand(actionCommand);
     return option;
   }
 
-  private JButton getStartGameButton() {
+  private JButton startGameButton() {
     JButton startGameButton = new JButton("Start game");
     startGameButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
@@ -143,7 +142,7 @@ public class StartPageView {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (startGameListener != null) {
-          startGameListener.startGameButtonClicked();
+          startGameListener.startGameButtonClicked(getGameSize());
         }
       }
     });
@@ -151,14 +150,8 @@ public class StartPageView {
     return startGameButton;
   }
 
-  // TODO: PREBACILA OVO U CONTROLLER: PROVJERI DA LI RADI
-  /*
-   * public int getGameSize() {
-   * ButtonModel selectedGameSizeModel = gameSizeButtonsGroup.getSelection();
-   * int selectedGameSize =
-   * Integer.parseInt(selectedGameSizeModel.getActionCommand());
-   * return selectedGameSize;
-   * }
-   */
+  private int getGameSize() {
+    return Integer.parseInt(gameSizeButtonsGroup.getSelection().getActionCommand());
+  }
 
 }
