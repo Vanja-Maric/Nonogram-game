@@ -8,9 +8,8 @@ import view.GamePageView;
 import view.StartPageView;
 
 
-public class Game implements StartGameListener, BackToMainMenuListener {
+public class App implements StartGameListener, BackToMainMenuListener {
   private AppFrame appFrame = new AppFrame();
-  private int level = 1;
 
   protected void startGame() {
     JFrame nonogramGameappFrame = appFrame.getAppFrame();
@@ -32,7 +31,7 @@ public class Game implements StartGameListener, BackToMainMenuListener {
 
   private String[][] nonogramGrid(int gameSize) {
     NonogramGrid nonogram = new NonogramGrid();
-    return nonogram.getNonogramGrid(level, gameSize, gameSize);
+    return nonogram.getNonogramGrid(gameSize, gameSize);
   }
 
   @Override

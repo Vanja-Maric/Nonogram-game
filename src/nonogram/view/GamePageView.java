@@ -7,19 +7,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import controller.BackToMainMenuListener;
-import model.Hint;
+import controller.GamePageController;
 
 public class GamePageView {
   private String[][] nongramGrid;
   private BackToMainMenuListener backToMainMenuListener;
+  private JPanel gamePageContainer = new JPanel();
+  private JPanel checkedSolutionMessage = new JPanel();
+   GameBoardView gameBoardView = new GameBoardView();
+  
 
   public GamePageView(String[][] nonogramGrid) {
     this.nongramGrid = nonogramGrid;
@@ -31,32 +34,28 @@ public class GamePageView {
   }
 
   public JPanel getGamePage() {
-    return makeGamePagPanel();
-  }
-
-  public JPanel makeGamePagPanel() {
-    JPanel gamePageContainer = new JPanel();
-
-    setGamePageContainerLayout(gamePageContainer);
-    addElementsToGamePage(gamePageContainer);
+    addElementsToGamePage();
     return gamePageContainer;
   }
 
-  private void setGamePageContainerLayout(JPanel gamePageContainer) {
-    gamePageContainer.setLayout(new GridBagLayout());
-  }
+  public void addElementsToGamePage() {
+    setGamePageContainerLayout();
 
-  private void addElementsToGamePage(JPanel gamePageContainer) {
     // Layout constraints
     GridBagConstraints gridBagConstrains = new GridBagConstraints();
 
     setGbc(gridBagConstrains, 0, 0);
-    gamePageContainer.add(gameBoard(), gridBagConstrains);
+    addOneElementToGamePage(gameBoard(), gridBagConstrains);
 
-    JPanel buttonsContainer = butonsContainer();
     setGbc(gridBagConstrains, 0, 1);
-    gamePageContainer.add(buttonsContainer, gridBagConstrains);
+    gamePageContainer.add(butonsContainer(), gridBagConstrains);
 
+    setGbc(gridBagConstrains, 0, 2);
+    gamePageContainer.add(checkedSolutionMessage, gridBagConstrains);
+  }
+
+  private void setGamePageContainerLayout() {
+    gamePageContainer.setLayout(new GridBagLayout());
   }
 
   private void setGbc(GridBagConstraints gbc, int x, int y) {
@@ -65,9 +64,14 @@ public class GamePageView {
     gbc.insets = new Insets(10, 10, 10, 10);
   }
 
-  private Box gameBoard() {
-    GameBoardView gameBoardView = new GameBoardView();
-    return gameBoardView.getGameBoard(nongramGrid);
+  private void addOneElementToGamePage(JPanel element, GridBagConstraints gridBagConstrains) {
+    gamePageContainer.add(element, gridBagConstrains);
+  }
+
+  private JPanel gameBoard() {
+    JPanel gameBoardContainer = new JPanel();
+    gameBoardContainer.add(gameBoardView.getGameBoard(nongramGrid));
+    return gameBoardContainer;
   }
 
   private JPanel butonsContainer() {
@@ -88,7 +92,7 @@ public class GamePageView {
 
   private void addButtonsToButtonsContainer(JPanel buttonsContainer) {
     buttonsContainer.add(makeCheckMySolutinButton());
-    buttonsContainer.add(makeGetHintButton());
+    buttonsContainer.add(makeGetSolutionButton());
     buttonsContainer.add(makeMainMenuButton());
   }
 
@@ -101,33 +105,49 @@ public class GamePageView {
   private void addActionListenerToCheckMySolutionButton(JButton checkMySolutionButton) {
     checkMySolutionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        // checkMySolutionButtonActionPerformed(e);
+        GamePageController gamePageController = new GamePageController();
+        makeCheckedSolutionMessage(gamePageController.checkSolution(nongramGrid, gameBoardView.getGameCells()));
       }
     });
   }
 
-  private JButton makeGetHintButton() {
-    JButton getHintButton = gamePageButton("Get hint");
-    addActionListenerToMakeGetHintButton(getHintButton);
-    return getHintButton;
+  private JPanel makeCheckedSolutionMessage(boolean isCorrect) {
+    deleteOldCheckSolutionMessage();
+    if (isCorrect) {
+      checkedSolutionMessage.add(new JLabel("Your solution is correct!"));
+    } else {
+      checkedSolutionMessage.add(new JLabel("Your solution is not correct!"));
+    }
+    gamePageContainer.repaint();
+    gamePageContainer.revalidate();
+
+    return checkedSolutionMessage;
   }
 
-  private void addActionListenerToMakeGetHintButton(JButton getHintButton) {
-    getHintButton.addActionListener(new ActionListener() {
+  private void deleteOldCheckSolutionMessage() {
+    if (checkedSolutionMessage != null) {
+      checkedSolutionMessage.removeAll();
+    }
+  }
+
+  private JButton makeGetSolutionButton() {
+    JButton getSolutionButton = gamePageButton("Get solution");
+    addActionListenerToMakeGetSolutionButton(getSolutionButton);
+    return getSolutionButton;
+  }
+
+  private void addActionListenerToMakeGetSolutionButton(JButton getSolutionButton) {
+    getSolutionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        // getHintButtonActionPerformed();
+       makeSolution();
       }
     });
   }
 
- /*  private void getHintButtonActionPerformed() {
-    // Generate random x and y coordinates in the range of the grid size
-    int x = (int) (Math.random() * nongramGrid.length);
-    int y = (int) (Math.random() * nongramGrid.length);
-    
-    Hint hint = new Hint(nongramGrid);
-    String hintColor = hint.getHint(x, y);
-  }*/
+  private void makeSolution() {
+    GamePageController gamePageController = new GamePageController();
+    gamePageController.solution(nongramGrid, gameBoardView.getGameCells());
+  }
 
   private JButton makeMainMenuButton() {
     JButton mainMenuButton = gamePageButton("Main menu");
@@ -148,24 +168,24 @@ public class GamePageView {
   private JButton gamePageButton(String buttonName) {
     JButton gamePageButton = new JButton(buttonName);
 
-    setGamePageButtonDimensions(gamePageButton);
-    setGamePageButtonColor(gamePageButton);
-    setGamePageButtonBorder(gamePageButton);
+    gamePageButtonDimensions(gamePageButton);
+    gamePageButtonColor(gamePageButton);
+    gamePageButtonBorder(gamePageButton);
 
     return gamePageButton;
   }
 
-  private void setGamePageButtonDimensions(JButton gamePageButton) {
+  private void gamePageButtonDimensions(JButton gamePageButton) {
     gamePageButton.setMinimumSize(new java.awt.Dimension(120, 30));
     gamePageButton.setMaximumSize(new java.awt.Dimension(120, 30));
     gamePageButton.setPreferredSize(new java.awt.Dimension(120, 30));
   }
 
-  private void setGamePageButtonColor(JButton gamePageButton) {
+  private void gamePageButtonColor(JButton gamePageButton) {
     gamePageButton.setBackground(java.awt.Color.YELLOW);
   }
 
-  private void setGamePageButtonBorder(JButton gamePageButton) {
+  private void gamePageButtonBorder(JButton gamePageButton) {
     Border border = new LineBorder(java.awt.Color.BLACK, 1);
     gamePageButton.setBorder(border);
   }

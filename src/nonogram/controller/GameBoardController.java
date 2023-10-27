@@ -2,8 +2,6 @@ package controller;
 
 import javax.swing.JButton;
 
-import model.Hint;
-
 import java.awt.Color;
 
 public class GameBoardController {
@@ -22,5 +20,5 @@ public class GameBoardController {
       targetCell.setText("");
     }
   }  
-
+  
 }

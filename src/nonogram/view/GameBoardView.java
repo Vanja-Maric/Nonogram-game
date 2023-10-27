@@ -22,18 +22,12 @@ public class GameBoardView {
     return createGameBoard(nonogramGrid);
   }
 
-  // TODO: KORISTI OVO DA PROVJERIS DA LI JE VEC POSTAVLJENA BOJA NA CRNU ILI
-  // SIVU A AKO NIJE ONDA UPOREDI SA GRIDOM I POSTAVI NA CRNU ILI SIVU
-  public Color getCellColor(int row, int column) {
-    return gameCells.get(row).get(column).getBackground();
+  public ArrayList<ArrayList<JButton>> getGameCells() {
+    return gameCells;
   }
 
-  // TODO: KORISTI OVO DA POSTAVIS BOJU NA CRNU ILI SIVU ZA OVO IZNAD
-  public void setColor(Color color, int row, int column) {
-    gameCells.get(row).get(column).setBackground(color);
-  } 
 
-  private Box createGameBoard(String[][] nonogramGrid) { // TODO: NAME
+  private Box createGameBoard(String[][] nonogramGrid) {
     Box gameBoard = Box.createVerticalBox();
     gameBoard.add(columnCounts());
 
@@ -56,7 +50,7 @@ public class GameBoardView {
       gameCellsInOneRow.add(nonogramCell);
       buttonRowBox.add(nonogramCell);
     }
-    
+
     gameCells.add(gameCellsInOneRow);
     return buttonRowBox;
   }
@@ -98,7 +92,7 @@ public class GameBoardView {
       }
     });
   }
-  
+
   private Box columnCounts() {
     NonogramCountsView nonogramCountsView = new NonogramCountsView();
 
