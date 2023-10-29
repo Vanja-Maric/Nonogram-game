@@ -113,7 +113,7 @@ public class NonogramCountsView {
       @Override
       public void actionPerformed(ActionEvent e) {
         NonogramCountsController nonogramCountsController = new NonogramCountsController();
-        nonogramCountsController.changeCountCellColor(button);
+        nonogramCountsController.applyToggleCountCellColor(button);
       }
     });
   }

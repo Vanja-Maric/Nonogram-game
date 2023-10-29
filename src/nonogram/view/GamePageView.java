@@ -106,7 +106,7 @@ public class GamePageView {
     checkMySolutionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         GamePageController gamePageController = new GamePageController();
-        makeCheckedSolutionMessage(gamePageController.checkSolution(nongramGrid, gameBoardView.getGameCells()));
+        makeCheckedSolutionMessage(gamePageController.isSolutionCorrect(nongramGrid, gameBoardView.getGameCells()));
       }
     });
   }
@@ -146,7 +146,7 @@ public class GamePageView {
 
   private void makeSolution() {
     GamePageController gamePageController = new GamePageController();
-    gamePageController.solution(nongramGrid, gameBoardView.getGameCells());
+    gamePageController.applySolutionToBoard(nongramGrid, gameBoardView.getGameCells());
   }
 
   private JButton makeMainMenuButton() {
