@@ -2,6 +2,7 @@ package controller;
 
 import javax.swing.JFrame;
 
+import model.ImageLoader;
 import model.NonogramGrid;
 import view.AppFrame;
 import view.GamePageView;
@@ -49,14 +50,24 @@ public class App implements StartGameListener, BackToMainMenuListener {
   }
 
   private void showGamePage(int gameSize) {
+    String[][] nonogramGrid = nonogramGrid(gameSize);
+    if (nonogramGrid.equals(null)) { // TODO: NO 0 returned 
     GamePageView gamePage = new GamePageView(nonogramGrid(gameSize));
     gamePage.setBackToMainMenuListener(this);
     appFrame.addContentToAppFrame(gamePage.getGamePage());
+    }
   }
 
   private String[][] nonogramGrid(int gameSize) {
-    NonogramGrid nonogram = new NonogramGrid();
+    try {
+    ImageLoader imageLoader = new ImageLoader();
+    NonogramGrid nonogram = new NonogramGrid(imageLoader);
     return nonogram.getNonogramGrid(gameSize, gameSize);
+    } catch (Exception e) {
+      appFrame.removeAllContent();
+    System.out.println("lplplpppplplplp");
+      return new String[0][]; // TODO: Handle error properly and one thing per function
+    }
   }
   
   private void showStartPage() {
