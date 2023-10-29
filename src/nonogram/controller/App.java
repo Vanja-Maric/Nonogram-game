@@ -1,7 +1,5 @@
 package controller;
 
-import javax.swing.JFrame;
-
 import model.ImageLoader;
 import model.NonogramGrid;
 import view.AppFrame;
@@ -44,17 +42,17 @@ public class App implements StartGameListener, BackToMainMenuListener {
    * Starts the Nonogram game application and shows the start page and the main application frame.
    */
   protected void startGame() {
-    JFrame nonogramGameappFrame = appFrame.getAppFrame();
     showStartPage();
-    appFrame.showAppFrame(nonogramGameappFrame);
+    appFrame.showAppFrame();
   }
 
   private void showGamePage(int gameSize) {
     String[][] nonogramGrid = nonogramGrid(gameSize);
-    if (nonogramGrid.equals(null)) { // TODO: NO 0 returned 
+    if (!nonogramGrid.equals(null)) { // TODO: NO 0 returned 
     GamePageView gamePage = new GamePageView(nonogramGrid(gameSize));
     gamePage.setBackToMainMenuListener(this);
     appFrame.addContentToAppFrame(gamePage.getGamePage());
+    appFrame.refreshContent();
     }
   }
 

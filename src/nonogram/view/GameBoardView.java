@@ -2,16 +2,10 @@ package view;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
 
-import controller.GameBoardController;
 import model.NonogramCounts;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.awt.Color;
 
 public class GameBoardView {
   private NonogramCounts nonogramCounts;
@@ -25,7 +19,6 @@ public class GameBoardView {
   public ArrayList<ArrayList<JButton>> getGameCells() {
     return gameCells;
   }
-
 
   private Box createGameBoard(String[][] nonogramGrid) {
     Box gameBoard = Box.createVerticalBox();
@@ -46,7 +39,7 @@ public class GameBoardView {
     ArrayList<JButton> gameCellsInOneRow = new ArrayList<JButton>();
 
     for (int cell = 0; cell < oneRowOfNonogramGrid.length; cell++) {
-      JButton nonogramCell = createCell();
+      JButton nonogramCell = gameCell();
       gameCellsInOneRow.add(nonogramCell);
       buttonRowBox.add(nonogramCell);
     }
@@ -55,42 +48,9 @@ public class GameBoardView {
     return buttonRowBox;
   }
 
-  private JButton createCell() {
-    JButton gameCell = new JButton();
-
-    setCellButtonColor(gameCell, Color.WHITE);
-    setCellButtonSize(gameCell, 20, 20);
-    setCellBorder(gameCell, 1, Color.GRAY);
-    addClickListener(gameCell);
-
+  private JButton gameCell() {
+    JButton gameCell = new GameCell();
     return gameCell;
-  }
-
-  private void setCellButtonColor(JButton gameCell, Color colorOfCell) {
-    gameCell.setOpaque(true);
-    gameCell.setFocusPainted(false);
-    gameCell.setBackground(colorOfCell);
-  }
-
-  private void setCellButtonSize(JButton gameCell, int width, int height) {
-    Dimension buttonSize = new Dimension(width, height);
-    gameCell.setMaximumSize(buttonSize);
-    gameCell.setMinimumSize(buttonSize);
-    gameCell.setPreferredSize(buttonSize);
-  }
-
-  private void setCellBorder(JButton gameCell, int borderWidth, Color borderColor) {
-    gameCell.setBorder(new LineBorder(borderColor, borderWidth));
-  }
-
-  private void addClickListener(JButton gameCell) {
-    gameCell.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        GameBoardController gameTableController = new GameBoardController();
-        gameTableController.changeCellColorAndText(gameCell);
-      }
-    });
   }
 
   private Box columnCounts() {

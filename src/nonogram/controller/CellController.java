@@ -7,7 +7,7 @@ import java.awt.Color;
 /**
  * The GameBoardController class is responsible for controlling the game board - modifying the cells color and text.
  */
-public class GameBoardController {
+public class CellController {
   private static final Color WHITE_COLOR = Color.WHITE;
   private static final Color BLACK_COLOR = Color.BLACK;
   private static final Color GRAY_COLOR = Color.LIGHT_GRAY;
