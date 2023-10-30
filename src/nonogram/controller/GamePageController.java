@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 public class GamePageController {
-  private static final String BLACK = "black";
-  private static final String WHITE = "white";
+  private final String BLACK = "black";
+  private final String WHITE = "white";
 
   public boolean isSolutionCorrect(String[][] nonogramGrid, ArrayList<ArrayList<JButton>> userGrid) {
     return gridsAreEqual(nonogramGrid, userGrid);

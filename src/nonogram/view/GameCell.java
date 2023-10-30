@@ -10,15 +10,17 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: ADAPT THIS AS COUNT CELL
+
 /**
  * Represents a cell in the Nonogram game board.
  */
 public class GameCell extends JButton {
-  private static final int CELL_WIDTH = 20;
-  private static final int CELL_HEIGHT = 20;
-  private static final Color CELL_BACKGROUND_COLOR = Color.WHITE;
-  private static final Color CELL_BORDER_COLOR = Color.GRAY;
-  private static final int CELL_BORDER_WIDTH = 1;
+  private final int CELL_WIDTH = 20;
+  private final int CELL_HEIGHT = 20;
+  private final Color CELL_BACKGROUND_COLOR = Color.WHITE;
+  private final Color CELL_BORDER_COLOR = Color.GRAY;
+  private final int CELL_BORDER_WIDTH = 1;
 
   /**
    * Represents a constructor for a  cell in the Nonogram game board.

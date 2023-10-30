@@ -10,8 +10,8 @@ import nonogram.NonogramGridCreator;
  * The class uses an ImageLoader object to load images from the specified folder.
  */
 public class NonogramGrid {
-  private static final String IMAGE_FOLDER_PATH = "src/images";
-  private static final String IMAGE_EXTENSION = ".png";
+  private final String IMAGE_FOLDER_PATH = "src/images";
+  private final String IMAGE_EXTENSION = ".png";
 
   private final ImageLoader imageLoader;
 

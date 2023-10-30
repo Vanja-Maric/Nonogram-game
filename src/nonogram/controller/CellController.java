@@ -8,11 +8,11 @@ import java.awt.Color;
  * The GameBoardController class is responsible for controlling the game board - modifying the cells color and text.
  */
 public class CellController {
-  private static final Color WHITE_COLOR = Color.WHITE;
-  private static final Color BLACK_COLOR = Color.BLACK;
-  private static final Color GRAY_COLOR = Color.LIGHT_GRAY;
-  private static final String EMPTY_TEXT = "";
-  private static final String CROSS_TEXT = "X";
+  private final Color WHITE_COLOR = Color.WHITE;
+  private final Color BLACK_COLOR = Color.BLACK;
+  private final Color GRAY_COLOR = Color.LIGHT_GRAY;
+  private final String EMPTY_TEXT = "";
+  private final String CROSS_TEXT = "X";
 
   /**
    * Changes the color and text of the given JButton to the next color and text in the sequence.

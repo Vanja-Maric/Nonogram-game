@@ -10,8 +10,8 @@ import javax.swing.JButton;
  */
 public class NonogramCountsController {
   
-  private static final Color ACTIVE_COLOR = Color.YELLOW;
-  private static final Color INACTIVE_COLOR = Color.GRAY;
+  private final Color ACTIVE_COLOR = Color.YELLOW;
+  private final Color INACTIVE_COLOR = Color.GRAY;
 
   /**
    * Toggles the background color of the given count cell between active and inactive colors.

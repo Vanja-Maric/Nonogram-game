@@ -4,23 +4,32 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
 
-import controller.NonogramCountsController;
+import model.NonogramCounts;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Color;
 
 public class NonogramCountsView {
+  private NonogramCounts nonogramCounts;
 
-  public Box getNonogramColumnsCounts(ArrayList<ArrayList<Integer>> columnsCounts, int highestSizeOfCountsInAllColumns, int highestSizeOfCountsInAllRows) {
-    return createNonogramColumnsCountsCells(columnsCounts, highestSizeOfCountsInAllColumns, highestSizeOfCountsInAllRows);
+  public NonogramCountsView(String[][] nonogramGrid) {
+    nonogramCounts = new NonogramCounts(nonogramGrid);
   }
 
-  public Box getNonogramOneRowCounts(ArrayList<Integer> targetRowCounts, int highestSizeOfCountsInAllRows) {
-    return createNonogramOneRowCounts(targetRowCounts, highestSizeOfCountsInAllRows);
+  public Box getNonogramColumnsCounts() {
+    int highestSizeOfCountsInColumns = nonogramCounts.getHighestSizeOfCountsInColumns();
+    int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
+    ArrayList<ArrayList<Integer>> nonogramCollumnsCounts = nonogramCounts.getNonogramColumnCounts();
+
+    return createNonogramColumnsCountsCells(nonogramCollumnsCounts, highestSizeOfCountsInColumns, highestSizeOfCountsInRows);
+  }
+
+  public Box getNonogramOneRowCounts(int row) {
+    int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
+    ArrayList<ArrayList<Integer>> nonogramRowCounts = nonogramCounts.getNonogramRowCounts();
+    ArrayList<Integer> targetRowCounts = nonogramRowCounts.get(row);
+
+    return createNonogramOneRowCounts(targetRowCounts, highestSizeOfCountsInRows);
   }
 
   private Box createNonogramOneRowCounts(ArrayList<Integer>
@@ -81,41 +90,8 @@ public class NonogramCountsView {
  }
 
   private JButton createCountCell() {
-    JButton countCell = new JButton();
-
-    setCountCellButtonColor(countCell, Color.YELLOW);
-    setCountCellButtonSize(countCell, 20, 20);
-    setCountCellButtonBorder(countCell, 1, Color.GRAY);
-    addClickListener(countCell);
-    
+    JButton countCell = new CountCell();
     return countCell;
-  }
-
-  private void setCountCellButtonColor(JButton button, Color colorOfCountCell) {
-    button.setOpaque(true);
-    button.setFocusPainted(false);
-    button.setBackground(colorOfCountCell);
-  }
-
-  private void setCountCellButtonSize(JButton button, int width, int height) {
-    Dimension buttonSize = new Dimension(width, height);
-    button.setMaximumSize(buttonSize);
-    button.setMinimumSize(buttonSize);
-    button.setPreferredSize(buttonSize);
-  }
-
-  private void setCountCellButtonBorder(JButton button, int borderWidth, Color borderColor) {
-    button.setBorder(new LineBorder(borderColor, borderWidth));
-  }
-
-  private void addClickListener(JButton button) {
-    button.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        NonogramCountsController nonogramCountsController = new NonogramCountsController();
-        nonogramCountsController.applyToggleCountCellColor(button);
-      }
-    });
   }
 
 }
