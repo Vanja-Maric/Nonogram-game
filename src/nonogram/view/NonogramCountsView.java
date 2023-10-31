@@ -90,7 +90,7 @@ public class NonogramCountsView {
  }
 
   private JButton createCountCell() {
-    JButton countCell = new CountCell();
+    JButton countCell = new CellForCounts();
     return countCell;
   }
 

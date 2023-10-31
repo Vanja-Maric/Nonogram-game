@@ -42,10 +42,6 @@ public class StartPageView {
     startPageContainer.setLayout(new GridBagLayout());
   }
 
-  // IT is impossible to respect all Clean code principle. YOu have to think which
-  // one to secrafise, like I have outgoing arguments here in order to have not to
-  // big get start page, and to not use to much memmory by making to many JPanel
-  // in ordet to avoid outgoing arguments.
   private void addElemntsToStartPage(JPanel startPageContainer) {
     // Layout constraints
     GridBagConstraints gridBagConstrains = new GridBagConstraints();

@@ -2,31 +2,31 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-
-import controller.CellController;
-
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import controller.NonogramCountsController;
 
 /**
- * Represents a cell in the Nonogram game board.
+ * This class represents a cell used for displaying counts in the Nonogram game.
  */
-public class GameCell extends JButton {
+public class CellForCounts extends JButton {
   private final int CELL_WIDTH = 20;
   private final int CELL_HEIGHT = 20;
-  private final Color CELL_BACKGROUND_COLOR = Color.WHITE;
+  private final Color CELL_BACKGROUND_COLOR = Color.YELLOW;
   private final Color CELL_BORDER_COLOR = Color.GRAY;
   private final int CELL_BORDER_WIDTH = 1;
 
-  private CellController cellController = new CellController();
+  private NonogramCountsController controller = new NonogramCountsController();
 
   /**
-   * Constructs a new GameCell object with default button color, size, and border, and adds a click listener.
-   * The click listener will change the cell's color and text - either to black, white or gray with x.
+   * Constructor for CellForCounts class.
+   * Sets the button color, size, border, and click listener.
+   * If the cell is clicked, the controller will toggle the color of the cell between Yell
+   * and Gray.
    */
-  public GameCell() {
+  public CellForCounts() {
     setButtonColor();
     setButtonSize();
     setButtonBorder();
@@ -40,9 +40,10 @@ public class GameCell extends JButton {
   }
 
   private void setButtonSize() {
-    setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-    setMaximumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-    setMinimumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
+    Dimension size = new Dimension(CELL_WIDTH, CELL_HEIGHT);
+    setMaximumSize(size);
+    setMinimumSize(size);
+    setPreferredSize(size);
   }
 
   private void setButtonBorder() {
@@ -53,7 +54,7 @@ public class GameCell extends JButton {
     addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        cellController.changeCellColorAndText(GameCell.this);
+        controller.applyToggleCountCellColor(CellForCounts.this);
       }
     });
   }
