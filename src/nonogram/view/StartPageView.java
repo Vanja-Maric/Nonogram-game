@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,14 +13,10 @@ import controller.StartGameListener;
 
 public class StartPageView {
   private StartGameListener startGameListener;
-  private ButtonGroup gameSizeButtonsGroup;
+  private GameSizeButtos gameSizeButtonBuilder = new GameSizeButtos();
 
   public void setStartGameListener(StartGameListener listener) {
     this.startGameListener = listener;
-  }
-
-  public ButtonGroup getGameSizeButtonGroup() {
-    return gameSizeButtonsGroup;
   }
 
   public JPanel getStartPage() {
@@ -33,7 +27,7 @@ public class StartPageView {
     JPanel startPageContainer = new JPanel();
 
     setStartPageContainerLayout(startPageContainer);
-    addElemntsToStartPage(startPageContainer);
+    addElementsToStartPage(startPageContainer);
 
     return startPageContainer;
   }
@@ -42,7 +36,7 @@ public class StartPageView {
     startPageContainer.setLayout(new GridBagLayout());
   }
 
-  private void addElemntsToStartPage(JPanel startPageContainer) {
+  private void addElementsToStartPage(JPanel startPageContainer) {
     // Layout constraints
     GridBagConstraints gridBagConstrains = new GridBagConstraints();
 
@@ -89,65 +83,28 @@ public class StartPageView {
   }
 
   private JPanel gameSizeButtons() {
-    gameSizeButtonsGroup = new ButtonGroup();
-    JPanel gameSizeButtonsContainer = containerForGameSizeButtons();
-
-    JRadioButton option1 = radioButtonForGameSize("12 x 12 (easy)", "12");
-    JRadioButton option2 = radioButtonForGameSize("20 x 20 (medium)", "20");
-    JRadioButton option3 = radioButtonForGameSize("30 x 30 (hard)", "30");
-
-    option1.setSelected(true);
-
-    gameSizeButtonsGroup.add(option1);
-    gameSizeButtonsGroup.add(option2);
-    gameSizeButtonsGroup.add(option3);
-
-    gameSizeButtonsContainer.add(option1);
-    gameSizeButtonsContainer.add(option2);
-    gameSizeButtonsContainer.add(option3);
-
-    return gameSizeButtonsContainer;
-  }
-
-  private JPanel containerForGameSizeButtons() {
-    JPanel gameSizeButtonsContainer = new JPanel();
-
-    gameSizeButtonsContainer.setLayout(new FlowLayout());
-    setDimensionsOfGameSizeButtonsContainer(gameSizeButtonsContainer, 800, 50);
-
-    return gameSizeButtonsContainer;
-  }
-
-  private void setDimensionsOfGameSizeButtonsContainer(JPanel gameSizeButtonsContainer,
-      int width, int height) {
-    Dimension maxDimensionOfGameSizeButtonsContainer = new Dimension(width, height);
-    gameSizeButtonsContainer.setMaximumSize(maxDimensionOfGameSizeButtonsContainer);
-  }
-
-  private JRadioButton radioButtonForGameSize(String text, String actionCommand) {
-    JRadioButton option = new JRadioButton(text);
-    option.setActionCommand(actionCommand);
-    return option;
+    return gameSizeButtonBuilder.getGameSizeButtons();
   }
 
   private JButton startGameButton() {
-    JButton startGameButton = new JButton("Start game");
+    JButton startGameButton = new AppButton("Start game", startGameListener());
     startGameButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    return startGameButton;
+  }
 
-    startGameButton.addActionListener(new ActionListener() {
+  private ActionListener startGameListener() {
+    return new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (startGameListener != null) {
           startGameListener.startGameButtonClicked(getGameSize());
         }
       }
-    });
-
-    return startGameButton;
+    };
   }
 
   private int getGameSize() {
-    return Integer.parseInt(gameSizeButtonsGroup.getSelection().getActionCommand());
+    return Integer.parseInt(gameSizeButtonBuilder.getSelectedGameSize());
   }
 
 }

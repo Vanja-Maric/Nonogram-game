@@ -31,16 +31,23 @@ public class GameBoardView {
     return gameCells;
   }
 
+  /**
+   * Creates a game board with nonogram grid, tow and column counts.
+   * 
+   * @param nonogramGrid the nonogram grid to be displayed on the game board
+   * @return the game board as a Box object
+   */
   private Box createGameBoard(String[][] nonogramGrid) {
     Box gameBoard = Box.createVerticalBox();
     NonogramCountsView nonogramCountsView = new NonogramCountsView(nonogramGrid);
-    Box countsInAllColumns = nonogramCountsView.getNonogramColumnsCounts();
+    Box countsInAllColumns = nonogramCountsView.getColumnsNonogramCounts();
+
     gameBoard.add(countsInAllColumns);
 
     for (int row = 0; row < nonogramGrid.length; row++) {
       Box oneRowOfGameBoard = Box.createHorizontalBox();
-      Box countsInOneRow = nonogramCountsView.getNonogramOneRowCounts(row);
       ArrayList<JButton> gameCellsInOneRow = createOneRowOfGameCells(nonogramGrid[row]);
+      Box countsInOneRow = nonogramCountsView.getOneRowOfNonogramCounts(row);
 
       oneRowOfGameBoard.add(countsInOneRow);
       for (JButton gameCell : gameCellsInOneRow) {
@@ -53,19 +60,14 @@ public class GameBoardView {
     return gameBoard;
   }
 
-  private  ArrayList<JButton> createOneRowOfGameCells(String[] oneRowOfNonogramGrid) {
-    ArrayList<JButton> gameCellsInOneRow = createGameCellsForOneRow(oneRowOfNonogramGrid);
-    addGameCellsToList(gameCellsInOneRow);
-    return gameCellsInOneRow;
-  }
-
-  private ArrayList<JButton> createGameCellsForOneRow(String[] oneRowOfNonogramGrid) {
+  private ArrayList<JButton> createOneRowOfGameCells(String[] oneRowOfNonogramGrid) {
     ArrayList<JButton> gameCellsInOneRow = new ArrayList<>();
 
     for (int cell = 0; cell < oneRowOfNonogramGrid.length; cell++) {
       JButton gameCell = createGameCell();
       gameCellsInOneRow.add(gameCell);
     }
+    addGameCellsToList(gameCellsInOneRow);
 
     return gameCellsInOneRow;
   }

@@ -28,7 +28,7 @@ public class NonogramGrid {
    * @throws IOException if there is an error reading the image file
    */
   public String[][] getNonogramGrid(int width, int height) throws IOException {
-    NonogramGridCreator nonogramGridCreator = new NonogramGridCreator(getRandomImagePath(), width, height);
+  NonogramGridCreator nonogramGridCreator = new NonogramGridCreator(getRandomImagePath(), width, height); // TODO: ERROR HANDLING
     return nonogramGridCreator.getBlackAndWhiteGrid();
   }
 

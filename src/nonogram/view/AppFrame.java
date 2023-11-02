@@ -5,15 +5,18 @@ import javax.swing.JPanel;
 
 /**
  * This class represents the main application frame for the Nonogram game.
- * It contains methods to add content to the frame, remove all content from the frame,
- * refresh the content of the frame, and show the frame. It also creates the JFrame
+ * It contains methods to add content to the frame, remove all content from the
+ * frame,
+ * refresh the content of the frame, and show the frame. It also creates the
+ * JFrame
  * and sets its characteristics such as title, size, and location.
  */
 public class AppFrame {
   private JFrame appFrame;
 
   /**
-   * Constructs a new AppFrame object, which represents the main window of the Nonogram game.
+   * Constructs a new AppFrame object, which represents the main window of the
+   * Nonogram game.
    */
   public AppFrame() {
     createAppFrame();
@@ -57,8 +60,8 @@ public class AppFrame {
 
   private void setGameFrameCharacteristics() {
     appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    appFrame.setSize(1000, 800);
+    appFrame.setSize(1000, 850);
     appFrame.setLocationRelativeTo(null); // Set JFrame to the middle of the screen
   }
-  
+
 }

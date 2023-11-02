@@ -23,29 +23,31 @@ public class GameCell extends JButton {
   private CellController cellController = new CellController();
 
   /**
-   * Constructs a new GameCell object with default button color, size, and border, and adds a click listener.
-   * The click listener will change the cell's color and text - either to black, white or gray with x.
+   * Constructs a new GameCell object with default button color, size, and border,
+   * and adds a click listener.
+   * The click listener will change the cell's color and text - either to black,
+   * white or gray with x.
    */
   public GameCell() {
-    setButtonColor();
-    setButtonSize();
-    setButtonBorder();
+    setCellColor();
+    setCellSize();
+    setCellBorder();
     addClickListener();
   }
 
-  private void setButtonColor() {
+  private void setCellColor() {
     setOpaque(true);
     setFocusPainted(false);
     setBackground(CELL_BACKGROUND_COLOR);
   }
 
-  private void setButtonSize() {
+  private void setCellSize() {
     setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
     setMaximumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
     setMinimumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
   }
 
-  private void setButtonBorder() {
+  private void setCellBorder() {
     setBorder(new LineBorder(CELL_BORDER_COLOR, CELL_BORDER_WIDTH));
   }
 

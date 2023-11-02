@@ -7,8 +7,6 @@ import javax.swing.JButton;
 
 import model.NonogramCounts;
 
-import java.awt.Color;
-
 public class NonogramCountsView {
   private NonogramCounts nonogramCounts;
 
@@ -16,81 +14,88 @@ public class NonogramCountsView {
     nonogramCounts = new NonogramCounts(nonogramGrid);
   }
 
-  public Box getNonogramColumnsCounts() {
+  public Box getColumnsNonogramCounts() {
     int highestSizeOfCountsInColumns = nonogramCounts.getHighestSizeOfCountsInColumns();
     int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
     ArrayList<ArrayList<Integer>> nonogramCollumnsCounts = nonogramCounts.getNonogramColumnCounts();
 
-    return createNonogramColumnsCountsCells(nonogramCollumnsCounts, highestSizeOfCountsInColumns, highestSizeOfCountsInRows);
+    return allColumnsCountsCells(nonogramCollumnsCounts, highestSizeOfCountsInColumns,
+        highestSizeOfCountsInRows);
   }
 
-  public Box getNonogramOneRowCounts(int row) {
+  public Box getOneRowOfNonogramCounts(int row) {
     int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
     ArrayList<ArrayList<Integer>> nonogramRowCounts = nonogramCounts.getNonogramRowCounts();
     ArrayList<Integer> targetRowCounts = nonogramRowCounts.get(row);
 
-    return createNonogramOneRowCounts(targetRowCounts, highestSizeOfCountsInRows);
+    return createOneRowCounts(targetRowCounts, highestSizeOfCountsInRows);
   }
 
-  private Box createNonogramOneRowCounts(ArrayList<Integer>
-    targetRowCounts, int highestSizeOfCountsInAllRows) {
+  private Box createOneRowCounts(ArrayList<Integer> targetRowCounts, int highestSizeOfCountsInAllRows) {
     Box oneRowCountsCells = Box.createHorizontalBox();
-    
-    for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
-    JButton buttonForCounts = createCountCell();
 
-    if (targetRowCounts.size() > i) {
-    buttonForCounts.setText(targetRowCounts.get(i).toString());
+    for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
+      JButton buttonForCounts = createCellForCounts();
+
+      if (targetRowCounts.size() > i) {
+        buttonForCounts.setText(targetRowCounts.get(i).toString());
+      }
+
+      oneRowCountsCells.add(buttonForCounts);
     }
-    oneRowCountsCells.add(buttonForCounts);
-    }
-    
+
     return oneRowCountsCells;
-    }
+  }
 
-  private Box createNonogramColumnsCountsCells(ArrayList<ArrayList<Integer>> columnCounts,
-    int highestSizeOfCountsInAllColumns, int highestSizeOfCountsInAllRows) {
+  private Box allColumnsCountsCells(ArrayList<ArrayList<Integer>> columnCounts,
+      int highestSizeOfCountsInAllColumns, int highestSizeOfCountsInAllRows) {
     Box allColumnsCounts = Box.createHorizontalBox();
-
-    for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
-      allColumnsCounts.add(createEmptyCellsOverRowCounts(highestSizeOfCountsInAllColumns));
-    }
+    addEmptyCellsOverRowCells(allColumnsCounts, highestSizeOfCountsInAllColumns, highestSizeOfCountsInAllRows);
 
     for (ArrayList<Integer> countsInOneColumn : columnCounts) {
-      Box oneColumnCounts = createOneColumnCounts(countsInOneColumn, highestSizeOfCountsInAllColumns);
+      Box oneColumnCounts = createOneColumnOfCounts(countsInOneColumn, highestSizeOfCountsInAllColumns);
       allColumnsCounts.add(oneColumnCounts);
     }
 
     return allColumnsCounts;
   }
 
-  private Box createOneColumnCounts(ArrayList<Integer> countsInOneColumn, int highestSizeOfCountsInAllColumns) {
-    Box oneColumnCounts = Box.createVerticalBox();
+  private void addEmptyCellsOverRowCells(Box allColumnsCounts, int highestSizeOfCountsInAllColumns,
+      int highestSizeOfCountsInAllRows) {
+    for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
+      Box oneColumnOfEmptyCells = createEmptyCells(highestSizeOfCountsInAllColumns);
+      allColumnsCounts.add(oneColumnOfEmptyCells);
+    }
+  }
+
+  private Box createOneColumnOfCounts(ArrayList<Integer> countsInOneColumn, int highestSizeOfCountsInAllColumns) {
+    Box oneColumnOfCounts = Box.createVerticalBox();
 
     for (int i = 0; i < highestSizeOfCountsInAllColumns; i++) {
-      JButton buttonForCounts = createCountCell();
-      buttonForCounts.setBackground(Color.YELLOW);
+      JButton cellForCounts = createCellForCounts();
 
       if (countsInOneColumn.size() > i) {
-        buttonForCounts.setText(countsInOneColumn.get(i).toString());
+        cellForCounts.setText(countsInOneColumn.get(i).toString());
       }
 
-      oneColumnCounts.add(buttonForCounts);
+      oneColumnOfCounts.add(cellForCounts);
     }
 
-    return oneColumnCounts;
+    return oneColumnOfCounts;
   }
 
- private Box createEmptyCellsOverRowCounts(int highestSizeOfCountsInAllColumns){
-   Box oneColumnOfEmptyCounts = Box.createVerticalBox();
-  for (int i = 0; i < highestSizeOfCountsInAllColumns; i++) {
-    oneColumnOfEmptyCounts.add(createCountCell());
-  }
-   return oneColumnOfEmptyCounts;
- }
+  private Box createEmptyCells(int numerOfRowsOfEmptyCells) {
+    Box oneColumnOfEmptyCounts = Box.createVerticalBox();
 
-  private JButton createCountCell() {
-    JButton countCell = new CellForCounts();
+    for (int i = 0; i < numerOfRowsOfEmptyCells; i++) {
+      oneColumnOfEmptyCounts.add(createCellForCounts());
+    }
+
+    return oneColumnOfEmptyCounts;
+  }
+
+  private JButton createCellForCounts() {
+    JButton countCell = new CellForNonogramCounts();
     return countCell;
   }
 

@@ -11,7 +11,7 @@ import controller.NonogramCountsController;
 /**
  * This class represents a cell used for displaying counts in the Nonogram game.
  */
-public class CellForCounts extends JButton {
+public class CellForNonogramCounts extends JButton {
   private final int CELL_WIDTH = 20;
   private final int CELL_HEIGHT = 20;
   private final Color CELL_BACKGROUND_COLOR = Color.YELLOW;
@@ -21,12 +21,12 @@ public class CellForCounts extends JButton {
   private NonogramCountsController controller = new NonogramCountsController();
 
   /**
-   * Constructor for CellForCounts class.
+   * Constructor for CellForNonogramCounts class.
    * Sets the button color, size, border, and click listener.
    * If the cell is clicked, the controller will toggle the color of the cell between Yell
    * and Gray.
    */
-  public CellForCounts() {
+  public CellForNonogramCounts() {
     setButtonColor();
     setButtonSize();
     setButtonBorder();
@@ -54,7 +54,7 @@ public class CellForCounts extends JButton {
     addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        controller.applyToggleCountCellColor(CellForCounts.this);
+        controller.applyToggleCountCellColor(CellForNonogramCounts.this);
       }
     });
   }

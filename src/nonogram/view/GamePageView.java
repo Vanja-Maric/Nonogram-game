@@ -5,41 +5,55 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 import controller.BackToMainMenuListener;
 import controller.GamePageController;
 
+/**
+ * The GamePageView class represents the view of the game page, which contains the nonogram grid, buttons to check and apply the solution, and a message indicating whether the solution is correct or not.
+ */
 public class GamePageView {
-  private String[][] nongramGrid;
+  private String[][] nonogramGrid;
   private BackToMainMenuListener backToMainMenuListener;
   private JPanel gamePageContainer = new JPanel();
   private JPanel checkedSolutionMessage = new JPanel();
-   GameBoardView gameBoardView = new GameBoardView();
-  
+  GameBoardView gameBoardView = new GameBoardView();
+  GamePageController gamePageController = new GamePageController();
 
+  /**
+   * Constructs a new GamePageView object with the given nonogram grid.
+   *
+   * @param nonogramGrid the nonogram grid to display in the view
+   */
   public GamePageView(String[][] nonogramGrid) {
-    this.nongramGrid = nonogramGrid;
-    System.out.println();
+    this.nonogramGrid = nonogramGrid;
   }
 
+  /**
+   * Sets the listener for the "Back to Main Menu" button.
+   * 
+   * @param listener the listener to be set
+   */
   public void setBackToMainMenuListener(BackToMainMenuListener listener) {
     this.backToMainMenuListener = listener;
   }
 
+  /**
+   * Returns the JPanel containing the game page with all necessery elements.
+   * 
+   * @return the JPanel containing the game page.
+   */
   public JPanel getGamePage() {
     addElementsToGamePage();
     return gamePageContainer;
   }
 
-  public void addElementsToGamePage() {
-    setGamePageContainerLayout();
+  private void addElementsToGamePage() {
+    gamePageContainer.setLayout(new GridBagLayout());
 
     // Layout constraints
     GridBagConstraints gridBagConstrains = new GridBagConstraints();
@@ -48,14 +62,10 @@ public class GamePageView {
     addOneElementToGamePage(gameBoard(), gridBagConstrains);
 
     setGbc(gridBagConstrains, 0, 1);
-    gamePageContainer.add(butonsContainer(), gridBagConstrains);
+    addOneElementToGamePage(buttonsContainer(), gridBagConstrains);
 
     setGbc(gridBagConstrains, 0, 2);
-    gamePageContainer.add(checkedSolutionMessage, gridBagConstrains);
-  }
-
-  private void setGamePageContainerLayout() {
-    gamePageContainer.setLayout(new GridBagLayout());
+    addOneElementToGamePage(checkedSolutionMessage, gridBagConstrains);
   }
 
   private void setGbc(GridBagConstraints gbc, int x, int y) {
@@ -70,16 +80,17 @@ public class GamePageView {
 
   private JPanel gameBoard() {
     JPanel gameBoardContainer = new JPanel();
-    gameBoardContainer.add(gameBoardView.getGameBoard(nongramGrid));
+    gameBoardContainer.add(gameBoardView.getGameBoard(nonogramGrid));
     return gameBoardContainer;
   }
 
-  private JPanel butonsContainer() {
-    JPanel buttonsContainer = new JPanel();
-
-    buttonsContainer.setLayout(new FlowLayout());
+  private JPanel buttonsContainer() {
+    JPanel buttonsContainer = new JPanel(new FlowLayout());
     setDimensionsOfButtonsContainer(buttonsContainer, 800, 50);
-    addButtonsToButtonsContainer(buttonsContainer);
+
+    buttonsContainer.add(createButton("Check my solution", e -> checkSolution()));
+    buttonsContainer.add(createButton("Get solution", e -> applySolution()));
+    buttonsContainer.add(createButton("Main menu", e -> goToMainMenu()));
 
     return buttonsContainer;
   }
@@ -90,104 +101,34 @@ public class GamePageView {
     gameSizeButtonsContainer.setMaximumSize(maxDimensionOfGameSizeButtonsContainer);
   }
 
-  private void addButtonsToButtonsContainer(JPanel buttonsContainer) {
-    buttonsContainer.add(makeCheckMySolutinButton());
-    buttonsContainer.add(makeGetSolutionButton());
-    buttonsContainer.add(makeMainMenuButton());
+  private JButton createButton(String text, ActionListener actionListener) {
+    JButton button = new AppButton(text, actionListener);
+    return button;
   }
 
-  private JButton makeCheckMySolutinButton() {
-    JButton checkMySolutionButton = gamePageButton("Check my solution");
-    addActionListenerToCheckMySolutionButton(checkMySolutionButton);
-    return checkMySolutionButton;
+  private void checkSolution() {
+    boolean isCorrect = gamePageController.isSolutionCorrect(nonogramGrid, gameBoardView.getGameCells());
+    updateCheckedSolutionMessage(isCorrect);
   }
 
-  private void addActionListenerToCheckMySolutionButton(JButton checkMySolutionButton) {
-    checkMySolutionButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GamePageController gamePageController = new GamePageController();
-        makeCheckedSolutionMessage(gamePageController.isSolutionCorrect(nongramGrid, gameBoardView.getGameCells()));
-      }
-    });
+  private void applySolution() {
+    gamePageController.applySolutionToBoard(nonogramGrid, gameBoardView.getGameCells());
   }
 
-  private JPanel makeCheckedSolutionMessage(boolean isCorrect) {
-    deleteOldCheckSolutionMessage();
-    if (isCorrect) {
-      checkedSolutionMessage.add(new JLabel("Your solution is correct!"));
-    } else {
-      checkedSolutionMessage.add(new JLabel("Your solution is not correct!"));
+  private void goToMainMenu() {
+    if (backToMainMenuListener != null) {
+      backToMainMenuListener.mainMenuButtonClicked();
     }
+  }
+
+  private void updateCheckedSolutionMessage(boolean isCorrect) {
+    checkedSolutionMessage.removeAll();
+
+    String message = isCorrect ? "Your solution is correct!" : "Your solution is not correct!";
+    checkedSolutionMessage.add(new JLabel(message));
+    
     gamePageContainer.repaint();
     gamePageContainer.revalidate();
-
-    return checkedSolutionMessage;
-  }
-
-  private void deleteOldCheckSolutionMessage() {
-    if (checkedSolutionMessage != null) {
-      checkedSolutionMessage.removeAll();
-    }
-  }
-
-  private JButton makeGetSolutionButton() {
-    JButton getSolutionButton = gamePageButton("Get solution");
-    addActionListenerToMakeGetSolutionButton(getSolutionButton);
-    return getSolutionButton;
-  }
-
-  private void addActionListenerToMakeGetSolutionButton(JButton getSolutionButton) {
-    getSolutionButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-       makeSolution();
-      }
-    });
-  }
-
-  private void makeSolution() {
-    GamePageController gamePageController = new GamePageController();
-    gamePageController.applySolutionToBoard(nongramGrid, gameBoardView.getGameCells());
-  }
-
-  private JButton makeMainMenuButton() {
-    JButton mainMenuButton = gamePageButton("Main menu");
-    addActionListenerToMakeMainMenuButton(mainMenuButton);
-    return mainMenuButton;
-  }
-
-  private void addActionListenerToMakeMainMenuButton(JButton mainMenuButton) {
-    mainMenuButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        if (backToMainMenuListener != null) {
-          backToMainMenuListener.mainMenuButtonClicked();
-        }
-      }
-    });
-  }
-
-  private JButton gamePageButton(String buttonName) {
-    JButton gamePageButton = new JButton(buttonName);
-
-    gamePageButtonDimensions(gamePageButton);
-    gamePageButtonColor(gamePageButton);
-    gamePageButtonBorder(gamePageButton);
-
-    return gamePageButton;
-  }
-
-  private void gamePageButtonDimensions(JButton gamePageButton) {
-    gamePageButton.setMinimumSize(new java.awt.Dimension(120, 30));
-    gamePageButton.setMaximumSize(new java.awt.Dimension(120, 30));
-    gamePageButton.setPreferredSize(new java.awt.Dimension(120, 30));
-  }
-
-  private void gamePageButtonColor(JButton gamePageButton) {
-    gamePageButton.setBackground(java.awt.Color.YELLOW);
-  }
-
-  private void gamePageButtonBorder(JButton gamePageButton) {
-    Border border = new LineBorder(java.awt.Color.BLACK, 1);
-    gamePageButton.setBorder(border);
   }
 
 }
