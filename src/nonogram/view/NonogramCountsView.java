@@ -7,13 +7,25 @@ import javax.swing.JButton;
 
 import model.NonogramCounts;
 
+/**
+ * NonogramCountsView is a class responsible for displaying the nonogram counts.
+ * It contains methods to get the visual representation of the counts for a
+ * single row or all columns.
+ */
 public class NonogramCountsView {
   private NonogramCounts nonogramCounts;
 
-  public NonogramCountsView(String[][] nonogramGrid) {
-    nonogramCounts = new NonogramCounts(nonogramGrid);
+  public NonogramCountsView(NonogramCounts nonogramCounts) {
+    this.nonogramCounts = nonogramCounts;
   }
 
+  /**
+   * Gets a horisontal Box object containing the nonogram counts for each column.
+   * The box contains empty in the leftmost cells to align the counts with the
+   * counts of the rows and the nonogram grid.
+   *
+   * @return a Box object containing the nonogram counts for each column
+   */
   public Box getColumnsNonogramCounts() {
     int highestSizeOfCountsInColumns = nonogramCounts.getHighestSizeOfCountsInColumns();
     int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
@@ -23,34 +35,43 @@ public class NonogramCountsView {
         highestSizeOfCountsInRows);
   }
 
-  public Box getOneRowOfNonogramCounts(int row) {
+  /**
+   * Returns a horisontal Box object containing the nonogram counts for a single
+   * row of the nonogram puzzle.
+   *
+   * @param row the row number for which to retrieve the counts
+   * @return a Box object containing the nonogram counts for the specified row
+   */
+  public Box getNonogramCountsOfOneRow(int row) {
     int highestSizeOfCountsInRows = nonogramCounts.getHighestSizeOfCountsInRows();
     ArrayList<ArrayList<Integer>> nonogramRowCounts = nonogramCounts.getNonogramRowCounts();
     ArrayList<Integer> targetRowCounts = nonogramRowCounts.get(row);
 
-    return createOneRowCounts(targetRowCounts, highestSizeOfCountsInRows);
+    return createCountsOfOneRow(targetRowCounts, highestSizeOfCountsInRows);
   }
 
-  private Box createOneRowCounts(ArrayList<Integer> targetRowCounts, int highestSizeOfCountsInAllRows) {
-    Box oneRowCountsCells = Box.createHorizontalBox();
+  private Box createCountsOfOneRow(ArrayList<Integer> countsOfTargetRow, int highestSizeOfCountsInAllRows) {
+    Box oneRowOfCountsCells = Box.createHorizontalBox();
 
     for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
       JButton buttonForCounts = createCellForCounts();
 
-      if (targetRowCounts.size() > i) {
-        buttonForCounts.setText(targetRowCounts.get(i).toString());
+      if (countsOfTargetRow.size() > i) {
+        buttonForCounts.setText(countsOfTargetRow.get(i).toString());
       }
 
-      oneRowCountsCells.add(buttonForCounts);
+      oneRowOfCountsCells.add(buttonForCounts);
     }
 
-    return oneRowCountsCells;
+    return oneRowOfCountsCells;
   }
 
   private Box allColumnsCountsCells(ArrayList<ArrayList<Integer>> columnCounts,
       int highestSizeOfCountsInAllColumns, int highestSizeOfCountsInAllRows) {
     Box allColumnsCounts = Box.createHorizontalBox();
-    addEmptyCellsOverRowCells(allColumnsCounts, highestSizeOfCountsInAllColumns, highestSizeOfCountsInAllRows);
+
+    // Add empty cells to empty space over the nonogram counts cells of all rows
+    addEmptyCellsOverRowCountsCells(allColumnsCounts, highestSizeOfCountsInAllColumns, highestSizeOfCountsInAllRows);
 
     for (ArrayList<Integer> countsInOneColumn : columnCounts) {
       Box oneColumnCounts = createOneColumnOfCounts(countsInOneColumn, highestSizeOfCountsInAllColumns);
@@ -60,7 +81,7 @@ public class NonogramCountsView {
     return allColumnsCounts;
   }
 
-  private void addEmptyCellsOverRowCells(Box allColumnsCounts, int highestSizeOfCountsInAllColumns,
+  private void addEmptyCellsOverRowCountsCells(Box allColumnsCounts, int highestSizeOfCountsInAllColumns,
       int highestSizeOfCountsInAllRows) {
     for (int i = 0; i < highestSizeOfCountsInAllRows; i++) {
       Box oneColumnOfEmptyCells = createEmptyCells(highestSizeOfCountsInAllColumns);

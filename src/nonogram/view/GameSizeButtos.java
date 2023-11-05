@@ -10,14 +10,32 @@ import java.awt.FlowLayout;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class represents a group of radio buttons that allow the user to select
+ * the size of the nonogram game.
+ * The available options are 12x12 (easy), 20x20 (medium), and 30x30 (hard).
+ * The selected game size can be retrieved with the getSelectedGameSize()
+ * method.
+ * The radio buttons are contained in a JPanel that can be retrieved with the
+ * getGameSizeButtons() method.
+ */
 public class GameSizeButtos {
-
   private ButtonGroup gameSizeButtonsGroup = new ButtonGroup();
 
+  /**
+   * Gets the action command of the selected game size button.
+   *
+   * @return the action command of the selected game size button.
+   */
   public String getSelectedGameSize() {
     return gameSizeButtonsGroup.getSelection().getActionCommand();
   }
 
+  /**
+   * Gets a JPanel containing the game size buttons.
+   * 
+   * @return a JPanel containing the game size buttons
+   */
   public JPanel getGameSizeButtons() {
     return gameSizeButtons();
   }

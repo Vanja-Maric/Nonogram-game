@@ -1,5 +1,8 @@
 package controller;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import model.ImageLoader;
 import model.NonogramGrid;
 import view.AppFrame;
@@ -48,7 +51,7 @@ public class App implements StartGameListener, BackToMainMenuListener {
 
   private void showGamePage(int gameSize) {
     String[][] nonogramGrid = nonogramGrid(gameSize);
-    if (!nonogramGrid.equals(null)) { // TODO: NO 0 returned 
+    if (nonogramGrid.length != 0) { 
     GamePageView gamePage = new GamePageView(nonogramGrid(gameSize));
     gamePage.setBackToMainMenuListener(this);
     appFrame.addContentToAppFrame(gamePage.getGamePage());
@@ -63,9 +66,15 @@ public class App implements StartGameListener, BackToMainMenuListener {
     return nonogram.getNonogramGrid(gameSize, gameSize);
     } catch (Exception e) {
       appFrame.removeAllContent();
-    System.out.println("lplplpppplplplp");
-      return new String[0][]; // TODO: Handle error properly and one thing per function
+      showSomethingWentWrongPage();
+      return new String[0][];
     }
+  }
+
+  private void showSomethingWentWrongPage() {
+    JPanel somethingWentWrongContainer = new JPanel();
+    somethingWentWrongContainer.add(new JLabel("Something went wrong. Please try again later."));
+    appFrame.addContentToAppFrame(somethingWentWrongContainer);
   }
   
   private void showStartPage() {

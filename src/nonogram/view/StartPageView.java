@@ -11,14 +11,30 @@ import javax.swing.*;
 
 import controller.StartGameListener;
 
+/**
+ * The StartPageView class represents the view for the start page of the
+ * Nonogram game.
+ * It contain spublic methods to set the listener for the start game butto and
+ * get a JPanel containing the start page.
+ */
 public class StartPageView {
   private StartGameListener startGameListener;
   private GameSizeButtos gameSizeButtonBuilder = new GameSizeButtos();
 
+  /**
+   * Sets the listener for the start game button.
+   *
+   * @param listener the listener to be set
+   */
   public void setStartGameListener(StartGameListener listener) {
     this.startGameListener = listener;
   }
 
+  /**
+   * Gets a JPanel containing the start page for the Nonogram game.
+   *
+   * @return a JPanel containing the start page
+   */
   public JPanel getStartPage() {
     return makeStartPage();
   }
@@ -53,7 +69,7 @@ public class StartPageView {
     setGbc(gridBagConstrains, 0, 3);
     setBiggerTopAndBottomInsets(gridBagConstrains);
     startPageContainer.add(startGameButton(), gridBagConstrains);
-    
+
   }
 
   // Sets components position

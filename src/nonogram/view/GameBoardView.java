@@ -3,6 +3,8 @@ package view;
 import javax.swing.Box;
 import javax.swing.JButton;
 
+import model.NonogramCounts;
+
 import java.util.ArrayList;
 
 /**
@@ -32,14 +34,18 @@ public class GameBoardView {
   }
 
   /**
-   * Creates a game board with nonogram grid, tow and column counts.
+   * Creates a game board with nonogram grid, row and column counts.
+   * The game board is represented by a Box object.
+   * Row counts are displayed on the left side of the game board.
+   * Column counts are displayed on the top of the game board.
    * 
    * @param nonogramGrid the nonogram grid to be displayed on the game board
    * @return the game board as a Box object
    */
   private Box createGameBoard(String[][] nonogramGrid) {
     Box gameBoard = Box.createVerticalBox();
-    NonogramCountsView nonogramCountsView = new NonogramCountsView(nonogramGrid);
+    NonogramCounts nonogramCounts = new NonogramCounts(nonogramGrid);
+    NonogramCountsView nonogramCountsView = new NonogramCountsView(nonogramCounts);
     Box countsInAllColumns = nonogramCountsView.getColumnsNonogramCounts();
 
     gameBoard.add(countsInAllColumns);
@@ -47,7 +53,7 @@ public class GameBoardView {
     for (int row = 0; row < nonogramGrid.length; row++) {
       Box oneRowOfGameBoard = Box.createHorizontalBox();
       ArrayList<JButton> gameCellsInOneRow = createOneRowOfGameCells(nonogramGrid[row]);
-      Box countsInOneRow = nonogramCountsView.getOneRowOfNonogramCounts(row);
+      Box countsInOneRow = nonogramCountsView.getNonogramCountsOfOneRow(row);
 
       oneRowOfGameBoard.add(countsInOneRow);
       for (JButton gameCell : gameCellsInOneRow) {
