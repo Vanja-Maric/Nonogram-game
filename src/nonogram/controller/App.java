@@ -1,12 +1,12 @@
 package controller;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.ImageLoader;
 import model.NonogramGrid;
 import view.AppFrame;
 import view.GamePageView;
+import view.SomethingWentWrong;
 import view.StartPageView;
 
 
@@ -73,7 +73,7 @@ public class App implements StartGameListener, BackToMainMenuListener {
 
   private void showSomethingWentWrongPage() {
     JPanel somethingWentWrongContainer = new JPanel();
-    somethingWentWrongContainer.add(new JLabel("Something went wrong. Please try again later."));
+    somethingWentWrongContainer.add(new SomethingWentWrong());
     appFrame.addContentToAppFrame(somethingWentWrongContainer);
   }
   
