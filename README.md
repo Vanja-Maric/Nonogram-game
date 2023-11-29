@@ -15,4 +15,5 @@ Game:
 ## [How to play the game](./endUser.md)
 ## [Use the Nonogram generator module, or continue its development](https://github.com/Vanja-Maric/Nonogram-generator)
 ## [How to Contribute](./contribute.md)
+## [Tests](./testing)
 ## [Examination](./reflection.md)
